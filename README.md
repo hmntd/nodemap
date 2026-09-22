@@ -7,7 +7,7 @@ Nodemap is a real-time collaborative web application designed for enterprise sof
 ## Technology Stack
 
 ### Backend
-- **Framework**: Laravel 13 (PHP 8.3+)
+- **Framework**: Laravel 13 (PHP 8.5+)
 - **API Engine**: Nuwave Lighthouse GraphQL API
 - **Database**: PostgreSQL (managed via Laravel Sail / Docker)
 - **Authentication & Authorization**: Laravel Inertia / Session Auth with 3-tier workspace role authorization
@@ -74,7 +74,7 @@ Nodemap is a real-time collaborative web application designed for enterprise sof
 ### Prerequisites
 - Docker & Docker Compose
 - Node.js (v20+) and npm
-- PHP 8.3+ and Composer
+- PHP 8.5+ and Composer
 
 ### Setup Steps
 
