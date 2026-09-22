@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -24,6 +25,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string|null $two_factor_recovery_codes
  * @property Carbon|null $two_factor_confirmed_at
  * @property string|null $remember_token
+ * @property Pivot|null $pivot
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -48,11 +50,17 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return HasMany<Team, $this>
+     */
     public function ownedTeams(): HasMany
     {
         return $this->hasMany(Team::class);
     }
 
+    /**
+     * @return BelongsToMany<Team, $this>
+     */
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class, 'team_user')
@@ -60,11 +68,17 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    /**
+     * @return HasMany<Project, $this>
+     */
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
     }
 
+    /**
+     * @return BelongsToMany<Project, $this>
+     */
     public function sharedProjects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'project_user')

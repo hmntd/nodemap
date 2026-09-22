@@ -37,7 +37,8 @@ class AddTeamMemberResolver
             $authRole = 'creator';
         } else {
             $memberPivot = $team->members()->where('users.id', $authUser->id)->first();
-            if ($memberPivot && strtolower($memberPivot->pivot->role) === 'admin') {
+            $pivotRole = $memberPivot ? (string) $memberPivot->pivot->getAttribute('role') : '';
+            if (strtolower($pivotRole) === 'admin') {
                 $authRole = 'admin';
             }
         }

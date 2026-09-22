@@ -177,8 +177,16 @@ export const REMOVE_TEAM_MEMBER = gql`
 `;
 
 export const UPDATE_TEAM_MEMBER_ROLE = gql`
-    mutation UpdateTeamMemberRole($team_id: ID!, $user_id: ID!, $role: String!) {
-        updateTeamMemberRole(team_id: $team_id, user_id: $user_id, role: $role) {
+    mutation UpdateTeamMemberRole(
+        $team_id: ID!
+        $user_id: ID!
+        $role: String!
+    ) {
+        updateTeamMemberRole(
+            team_id: $team_id
+            user_id: $user_id
+            role: $role
+        ) {
             id
             name
             membersWithRoles {
@@ -192,8 +200,16 @@ export const UPDATE_TEAM_MEMBER_ROLE = gql`
 `;
 
 export const CREATE_PROJECT = gql`
-    mutation CreateProject($title: String!, $description: String, $team_id: ID) {
-        createProject(title: $title, description: $description, team_id: $team_id) {
+    mutation CreateProject(
+        $title: String!
+        $description: String
+        $team_id: ID
+    ) {
+        createProject(
+            title: $title
+            description: $description
+            team_id: $team_id
+        ) {
             id
             team_id
             title
@@ -231,8 +247,16 @@ export const REVOKE_PROJECT_ACCESS = gql`
 `;
 
 export const CREATE_DIAGRAM = gql`
-    mutation CreateDiagram($project_id: ID!, $title: String!, $description: String) {
-        createDiagram(project_id: $project_id, title: $title, description: $description) {
+    mutation CreateDiagram(
+        $project_id: ID!
+        $title: String!
+        $description: String
+    ) {
+        createDiagram(
+            project_id: $project_id
+            title: $title
+            description: $description
+        ) {
             id
             project_id
             title
@@ -287,12 +311,7 @@ export const UPDATE_NODE = gql`
         $type: String
         $metadata: JSON
     ) {
-        updateNode(
-            id: $id
-            label: $label
-            type: $type
-            metadata: $metadata
-        ) {
+        updateNode(id: $id, label: $label, type: $type, metadata: $metadata) {
             id
             label
             type
@@ -302,8 +321,16 @@ export const UPDATE_NODE = gql`
 `;
 
 export const UPDATE_NODE_POSITION = gql`
-    mutation UpdateNodePosition($id: ID!, $position_x: Float!, $position_y: Float!) {
-        updateNodePosition(id: $id, position_x: $position_x, position_y: $position_y) {
+    mutation UpdateNodePosition(
+        $id: ID!
+        $position_x: Float!
+        $position_y: Float!
+    ) {
+        updateNodePosition(
+            id: $id
+            position_x: $position_x
+            position_y: $position_y
+        ) {
             id
             position_x
             position_y
@@ -351,8 +378,20 @@ export const CREATE_EDGE = gql`
 `;
 
 export const UPDATE_EDGE = gql`
-    mutation UpdateEdge($id: ID!, $source_handle: String, $target_handle: String, $label: String, $type: String) {
-        updateEdge(id: $id, source_handle: $source_handle, target_handle: $target_handle, label: $label, type: $type) {
+    mutation UpdateEdge(
+        $id: ID!
+        $source_handle: String
+        $target_handle: String
+        $label: String
+        $type: String
+    ) {
+        updateEdge(
+            id: $id
+            source_handle: $source_handle
+            target_handle: $target_handle
+            label: $label
+            type: $type
+        ) {
             id
             source_handle
             target_handle

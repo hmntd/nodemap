@@ -3,6 +3,7 @@
 namespace App\GraphQL\Queries;
 
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,8 +17,8 @@ class SharedProjectsResolver
     public function __invoke($_, array $args): Collection
     {
         $user = Auth::user();
-        if (! $user) {
-            return new Collection();
+        if (! ($user instanceof User)) {
+            return new Collection;
         }
 
         return $user->sharedProjects()->with(['team', 'diagrams'])->get();

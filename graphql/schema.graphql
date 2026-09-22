@@ -1,5 +1,6 @@
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
-scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+scalar DateTime
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 "Loose scalar type for JSON metadata"
 scalar JSON @scalar(class: "App\\GraphQL\\Scalars\\JSON")
@@ -28,7 +29,8 @@ type Team {
     name: String!
     description: String
     members: [User!]! @belongsToMany
-    membersWithRoles: [TeamMember!]! @field(resolver: "App\\GraphQL\\Queries\\TeamMembersResolver")
+    membersWithRoles: [TeamMember!]!
+        @field(resolver: "App\\GraphQL\\Queries\\TeamMembersResolver")
     projects: [Project!]! @hasMany
     created_at: DateTime!
     updated_at: DateTime!
@@ -91,29 +93,67 @@ type Edge {
 type Query {
     teams: [Team!]! @field(resolver: "App\\GraphQL\\Queries\\TeamsResolver")
     team(id: ID! @eq): Team @find
-    projects(team_id: ID): [Project!]! @field(resolver: "App\\GraphQL\\Queries\\ProjectsResolver")
-    sharedProjects: [Project!]! @field(resolver: "App\\GraphQL\\Queries\\SharedProjectsResolver")
+    projects(team_id: ID): [Project!]!
+        @field(resolver: "App\\GraphQL\\Queries\\ProjectsResolver")
+    sharedProjects: [Project!]!
+        @field(resolver: "App\\GraphQL\\Queries\\SharedProjectsResolver")
     project(id: ID! @eq): Project @find
     diagrams(project_id: ID! @eq): [Diagram!]! @all
     diagram(id: ID! @eq): Diagram @find
 }
 
 type Mutation {
-    createTeam(name: String!, description: String, user_id: ID): Team! @create @validator(class: "App\\GraphQL\\Validators\\CreateTeamInputValidator")
-    updateTeam(id: ID!, name: String, description: String): Team! @update @validator(class: "App\\GraphQL\\Validators\\UpdateTeamInputValidator")
+    createTeam(name: String!, description: String, user_id: ID): Team!
+        @create
+        @validator(class: "App\\GraphQL\\Validators\\CreateTeamInputValidator")
+    updateTeam(id: ID!, name: String, description: String): Team!
+        @update
+        @validator(class: "App\\GraphQL\\Validators\\UpdateTeamInputValidator")
     deleteTeam(id: ID! @whereKey): Team @delete
-    addTeamMember(team_id: ID!, email: String!, role: String): Team! @field(resolver: "App\\GraphQL\\Mutations\\AddTeamMemberResolver")
-    removeTeamMember(team_id: ID!, user_id: ID!): Team! @field(resolver: "App\\GraphQL\\Mutations\\RemoveTeamMemberResolver")
-    updateTeamMemberRole(team_id: ID!, user_id: ID!, role: String!): Team! @field(resolver: "App\\GraphQL\\Mutations\\UpdateTeamMemberRoleResolver")
+    addTeamMember(team_id: ID!, email: String!, role: String): Team!
+        @field(resolver: "App\\GraphQL\\Mutations\\AddTeamMemberResolver")
+    removeTeamMember(team_id: ID!, user_id: ID!): Team!
+        @field(resolver: "App\\GraphQL\\Mutations\\RemoveTeamMemberResolver")
+    updateTeamMemberRole(team_id: ID!, user_id: ID!, role: String!): Team!
+        @field(
+            resolver: "App\\GraphQL\\Mutations\\UpdateTeamMemberRoleResolver"
+        )
 
-    createProject(title: String!, description: String, user_id: ID, team_id: ID): Project! @create @validator(class: "App\\GraphQL\\Validators\\CreateProjectInputValidator")
-    updateProject(id: ID!, title: String, description: String): Project! @update @validator(class: "App\\GraphQL\\Validators\\UpdateProjectInputValidator")
+    createProject(
+        title: String!
+        description: String
+        user_id: ID
+        team_id: ID
+    ): Project!
+        @create
+        @validator(
+            class: "App\\GraphQL\\Validators\\CreateProjectInputValidator"
+        )
+    updateProject(id: ID!, title: String, description: String): Project!
+        @update
+        @validator(
+            class: "App\\GraphQL\\Validators\\UpdateProjectInputValidator"
+        )
     deleteProject(id: ID! @whereKey): Project @delete
-    shareProject(project_id: ID!, email: String!): Project! @field(resolver: "App\\GraphQL\\Mutations\\ShareProjectResolver")
-    revokeProjectAccess(project_id: ID!, user_id: ID!): Project! @field(resolver: "App\\GraphQL\\Mutations\\RevokeProjectAccessResolver")
+    shareProject(project_id: ID!, email: String!): Project!
+        @field(resolver: "App\\GraphQL\\Mutations\\ShareProjectResolver")
+    revokeProjectAccess(project_id: ID!, user_id: ID!): Project!
+        @field(resolver: "App\\GraphQL\\Mutations\\RevokeProjectAccessResolver")
 
-    createDiagram(project_id: ID!, title: String!, description: String): Diagram! @create @validator(class: "App\\GraphQL\\Validators\\CreateDiagramInputValidator")
-    updateDiagram(id: ID!, title: String, description: String): Diagram! @update @validator(class: "App\\GraphQL\\Validators\\UpdateDiagramInputValidator")
+    createDiagram(
+        project_id: ID!
+        title: String!
+        description: String
+    ): Diagram!
+        @create
+        @validator(
+            class: "App\\GraphQL\\Validators\\CreateDiagramInputValidator"
+        )
+    updateDiagram(id: ID!, title: String, description: String): Diagram!
+        @update
+        @validator(
+            class: "App\\GraphQL\\Validators\\UpdateDiagramInputValidator"
+        )
     deleteDiagram(id: ID! @whereKey): Diagram @delete
 
     createNode(
@@ -125,18 +165,11 @@ type Mutation {
         metadata: JSON
     ): Node! @create
 
-    updateNode(
-        id: ID!
-        label: String
-        type: String
-        metadata: JSON
-    ): Node! @update
+    updateNode(id: ID!, label: String, type: String, metadata: JSON): Node!
+        @update
 
-    updateNodePosition(
-        id: ID!
-        position_x: Float!
-        position_y: Float!
-    ): Node! @update
+    updateNodePosition(id: ID!, position_x: Float!, position_y: Float!): Node!
+        @update
 
     deleteNode(id: ID! @whereKey): Node @delete
 

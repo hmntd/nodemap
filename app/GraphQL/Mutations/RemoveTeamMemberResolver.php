@@ -30,7 +30,8 @@ class RemoveTeamMemberResolver
             $authRole = 'creator';
         } else {
             $memberPivot = $team->members()->where('users.id', $authUser->id)->first();
-            if ($memberPivot && strtolower($memberPivot->pivot->role) === 'admin') {
+            $pivotRole = $memberPivot ? (string) $memberPivot->pivot->getAttribute('role') : '';
+            if (strtolower($pivotRole) === 'admin') {
                 $authRole = 'admin';
             }
         }
@@ -55,7 +56,8 @@ class RemoveTeamMemberResolver
             ]);
         }
 
-        $targetRole = strtolower($targetMemberPivot->pivot->role) === 'admin' ? 'admin' : 'user';
+        $targetPivotRole = (string) $targetMemberPivot->pivot->getAttribute('role');
+        $targetRole = strtolower($targetPivotRole) === 'admin' ? 'admin' : 'user';
 
         if ($authRole === 'admin' && $targetRole === 'admin') {
             throw ValidationException::withMessages([

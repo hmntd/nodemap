@@ -27,9 +27,10 @@ class ShareProjectResolver
         }
 
         // Check if user is already a member of the project's team
-        if ($project->team_id) {
-            $isTeamMember = $project->team->members()->where('users.id', $user->id)->exists() 
-                || $project->team->user_id === $user->id;
+        $team = $project->team;
+        if ($team) {
+            $isTeamMember = $team->members()->where('users.id', $user->id)->exists()
+                || $team->user_id === $user->id;
 
             if ($isTeamMember) {
                 throw ValidationException::withMessages([

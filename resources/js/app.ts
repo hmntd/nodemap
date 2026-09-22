@@ -13,14 +13,18 @@ const appName = import.meta.env.VITE_APP_NAME || 'nodemap';
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .provide(DefaultApolloClient, apolloClient)
-            .mount(el);
+        if (el) {
+            createApp({ render: () => h(App, props) })
+                .use(plugin)
+                .provide(DefaultApolloClient, apolloClient)
+                .mount(el);
+        }
     },
     layout: (name) => {
         switch (true) {
-            case name === 'Welcome' || name === 'DiagramEditor' || name === 'WorkspaceManagement':
+            case name === 'Welcome' ||
+                name === 'DiagramEditor' ||
+                name === 'WorkspaceManagement':
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;

@@ -11,7 +11,7 @@ class UpdateProjectInputValidator extends Validator
     public function rules(): array
     {
         $projectId = $this->arg('id');
-        $project = Project::find($projectId);
+        $project = Project::where('id', $projectId)->first();
         $teamId = $project ? $project->team_id : null;
 
         return [

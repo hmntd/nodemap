@@ -11,7 +11,7 @@ class CreateDiagramInputValidator extends Validator
     public function rules(): array
     {
         $projectId = $this->arg('project_id');
-        $project = Project::find($projectId);
+        $project = Project::where('id', $projectId)->first();
         $teamId = $project ? $project->team_id : null;
 
         return [
@@ -23,6 +23,7 @@ class CreateDiagramInputValidator extends Validator
                     if ($teamId) {
                         return $query->whereIn('project_id', Project::where('team_id', $teamId)->pluck('id'));
                     }
+
                     return $query->where('project_id', $projectId);
                 }),
             ],

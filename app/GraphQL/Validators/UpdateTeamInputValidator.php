@@ -11,7 +11,7 @@ class UpdateTeamInputValidator extends Validator
     public function rules(): array
     {
         $teamId = $this->arg('id');
-        $team = Team::find($teamId);
+        $team = Team::where('id', $teamId)->first();
         $userId = $team ? $team->user_id : auth()->id();
 
         return [

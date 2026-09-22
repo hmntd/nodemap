@@ -2,7 +2,6 @@
 
 namespace App\GraphQL\Scalars;
 
-use GraphQL\Error\Error;
 use GraphQL\Language\AST\BooleanValueNode;
 use GraphQL\Language\AST\FloatValueNode;
 use GraphQL\Language\AST\IntValueNode;
@@ -23,6 +22,7 @@ class JSON extends ScalarType
     {
         if (is_string($value)) {
             $decoded = json_decode($value, true);
+
             return json_last_error() === JSON_ERROR_NONE ? $decoded : $value;
         }
 
@@ -33,6 +33,7 @@ class JSON extends ScalarType
     {
         if (is_string($value)) {
             $decoded = json_decode($value, true);
+
             return json_last_error() === JSON_ERROR_NONE ? $decoded : $value;
         }
 
@@ -43,6 +44,7 @@ class JSON extends ScalarType
     {
         if ($valueNode instanceof StringValueNode) {
             $decoded = json_decode($valueNode->value, true);
+
             return json_last_error() === JSON_ERROR_NONE ? $decoded : $valueNode->value;
         }
 
@@ -63,6 +65,7 @@ class JSON extends ScalarType
             foreach ($valueNode->fields as $field) {
                 $object[$field->name->value] = $this->parseLiteral($field->value, $variables);
             }
+
             return $object;
         }
 
@@ -71,6 +74,7 @@ class JSON extends ScalarType
             foreach ($valueNode->values as $item) {
                 $list[] = $this->parseLiteral($item, $variables);
             }
+
             return $list;
         }
 

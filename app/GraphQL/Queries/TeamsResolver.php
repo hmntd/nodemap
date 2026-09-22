@@ -17,7 +17,7 @@ class TeamsResolver
     {
         $user = Auth::user();
         if (! $user) {
-            return new Collection();
+            return new Collection;
         }
 
         return Team::where('user_id', $user->id)
