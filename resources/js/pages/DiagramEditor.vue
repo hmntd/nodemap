@@ -754,6 +754,40 @@ async function updateDiagram() {
     }
 }
 
+function miniMapNodeColor(node: any) {
+    const type = node.data?.type || node.type;
+    switch (type) {
+        case 'database':
+            return '#1e1b4b';
+        case 'queue':
+            return '#451a03';
+        case 'client':
+            return '#3b0764';
+        case 'external_api':
+            return '#4c0519';
+        case 'service':
+        default:
+            return '#064e3b';
+    }
+}
+
+function miniMapNodeStroke(node: any) {
+    const type = node.data?.type || node.type;
+    switch (type) {
+        case 'database':
+            return '#6366f1';
+        case 'queue':
+            return '#f59e0b';
+        case 'client':
+            return '#a855f7';
+        case 'external_api':
+            return '#f43f5e';
+        case 'service':
+        default:
+            return '#10b981';
+    }
+}
+
 function handleLogout() {
     router.post('/logout');
 }
@@ -945,7 +979,13 @@ function handleLogout() {
                     class="h-full w-full">
                     <Background pattern-color="#262626" :gap="24" />
                     <Controls class="!bg-neutral-900 !border-neutral-800 !text-neutral-100" />
-                    <MiniMap class="!bg-black !border-neutral-800" />
+                    <MiniMap
+                        class="!bg-black !border-2 !border-white !rounded-xl overflow-hidden shadow-2xl"
+                        mask-color="rgba(0, 0, 0, 0.85)"
+                        :node-color="miniMapNodeColor"
+                        :node-stroke-color="miniMapNodeStroke"
+                        :node-border-radius="6"
+                    />
                 </VueFlow>
             </main>
 

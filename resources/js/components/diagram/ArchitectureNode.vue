@@ -95,7 +95,7 @@ const metadataFields = computed(() => {
 </script>
 
 <template>
-    <div class="relative min-w-[220px] rounded-xl bg-black border p-4 transition-all duration-200 select-none text-neutral-100"
+    <div class="relative min-w-[180px] rounded-xl bg-black border p-3 transition-all duration-200 select-none text-neutral-100"
         :class="[
             typeConfig.border,
             typeConfig.glow,
