@@ -2,10 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'Welcome')->name('home');
+Route::get('/', function () {
+    return auth()->check() ? redirect()->route('dashboard') : redirect()->route('login');
+})->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+    Route::inertia('dashboard', 'DiagramEditor')->name('dashboard');
+    Route::inertia('architect', 'DiagramEditor')->name('architect');
+    Route::inertia('workspaces', 'WorkspaceManagement')->name('workspaces');
 });
 
 require __DIR__.'/settings.php';
